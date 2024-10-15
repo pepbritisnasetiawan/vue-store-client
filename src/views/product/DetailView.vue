@@ -2,7 +2,7 @@
   <div class="">
     <div class="" id="page-wrap" v-if="product">
       <div id="img-wrap">
-        <img :src="product.imageUrl" alt="" />
+        <img :src="`http://localhost:8000${product.imageUrl}`" alt="" />
       </div>
       <div class="" id="product-details">
         <h1>{{ product.name }}</h1>
@@ -15,32 +15,29 @@
       </div>
     </div>
 
-    <NotFoundView v-else/>
+    <NotFoundView v-else />
   </div>
 </template>
 
 <script>
-import { products } from '@/data-seed';
+import axios from 'axios';
 import NotFoundView from '../errors/NotFoundView.vue';
 
 export default {
   components: {
-    NotFoundView
+    NotFoundView,
   },
   data() {
     return {
-      products,
+      product: {},
     };
   },
-  computed: {
-    product() {
-      return this.products.find((p) => {
-        return p.id === this.$route.params.id;
-      });
-    },
-  },
-  mounted() {
-    console.log(this.product);
+  async created() {
+    const code = this.$route.params.id;
+    const result = await axios.get(
+      `http://localhost:8000/api/products/${code}`
+    );
+    this.product = result.data;
   },
 };
 </script>

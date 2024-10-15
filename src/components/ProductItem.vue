@@ -4,7 +4,7 @@
           <h3>{{ product.name }}</h3>
           <p class="product-price">Rp{{ product.price }}</p>
           <router-link
-            :to="{ name: 'product-detail', params: { id: product.id } }"
+            :to="{ name: 'product-detail', params: { id: product.code } }"
           >
             <button>Detail</button></router-link
           >
