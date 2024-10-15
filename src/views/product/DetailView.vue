@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="" id="page-wrap">
+    <div class="" id="page-wrap" v-if="product">
       <div id="img-wrap">
         <img :src="product.imageUrl" alt="" />
       </div>
@@ -14,13 +14,19 @@
         </p>
       </div>
     </div>
+
+    <NotFoundView v-else/>
   </div>
 </template>
 
 <script>
 import { products } from '@/data-seed';
+import NotFoundView from '../errors/NotFoundView.vue';
 
 export default {
+  components: {
+    NotFoundView
+  },
   data() {
     return {
       products,

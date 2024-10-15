@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Product from '../views/product/IndexView.vue';
 import ProductDetail from '../views/product/DetailView.vue';
 import Cart from '../views/cart/IndexView.vue';
+import NotFoundView from '@/views/errors/NotFoundView.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,10 @@ const routes = [
     name: 'cart',
     component: Cart,
   },
+  {
+    path: '*',
+    Comment: NotFoundView
+  }
 ];
 
 const router = new VueRouter({
