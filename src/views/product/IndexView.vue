@@ -9,8 +9,8 @@
 </template>
 
 <script>
+import axios from 'axios';
 import ProductItem from '@/components/ProductItem.vue';
-import { products } from '@/data-seed';
 
 export default {
   components: {
@@ -18,9 +18,13 @@ export default {
   },
   data() {
     return {
-      products,
+      products: [],
     };
   },
+  async created() {
+    const result = await axios.get('http://localhost:8000/api/products')
+    this.products = result.data
+  }
 };
 </script>
 
