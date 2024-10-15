@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <div class="" id="page-wrap" v-if="product">
+      <h4 v-if="notif" class="notif">Item added successfully</h4>
       <div id="img-wrap">
         <img :src="`http://localhost:8000${product.imageUrl}`" alt="" />
       </div>
@@ -8,7 +9,9 @@
         <h1>{{ product.name }}</h1>
         <h3 id="price">{{ product.price }}</h3>
         <p>Average Ratiing: {{ product.averageRating }}</p>
-        <button id="add-to-cart">Add to Cart</button>
+        <button id="add-to-cart" @click="addToCart(product.code)">
+          Add to Cart
+        </button>
         <p>
           {{ product.description }}
         </p>
@@ -30,7 +33,16 @@ export default {
   data() {
     return {
       product: {},
+      notif: false,
     };
+  },
+  methods: {
+    async addToCart(product) {
+      await axios.post('http://localhost:8000/api/orders/update/user/1', {
+        product: product,
+      });
+      this.notif = true;
+    },
   },
   async created() {
     const code = this.$route.params.id;
@@ -70,5 +82,12 @@ img {
   position: absolute;
   top: 24px;
   right: 16px;
+}
+.notif {
+  text-align: center;
+  color: white;
+  background-color: #41b883;
+  padding: 3%;
+  border-radius: 8px;
 }
 </style>
